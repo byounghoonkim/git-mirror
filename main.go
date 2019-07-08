@@ -53,11 +53,10 @@ func gitCloneHandler(cfg config, next http.Handler) http.Handler {
 
 		if -1 < strings.Index(rpstr, ".git/info/") || strings.HasSuffix(rpstr, ".git") {
 			rpstr = rpstr[:strings.Index(rpstr, ".git")+4]
+			log.Print("Cloning ", rpstr)
 			rp := repo{rpstr, "https://" + rpstr, duration{}}
 			if err := mirror(cfg, rp); err != nil {
-				log.Fatal("Clone Error", err, rp, r)
-			} else {
-				log.Print("Clone Success", rp)
+				log.Print("Clone Error", err, rp, r)
 			}
 		}
 
